@@ -1,10 +1,10 @@
 <script setup></script>
 
 <template>
-	<main class="container py-4">
-		<h2>Hello Vue3</h2>
-		<button class="btn btn-primary">test</button>
-	</main>
+	<div id="app">
+		<!-- 애플리케이션 컨텐츠 -->
+		<router-view></router-view>
+	</div>
 </template>
 
 <style scoped></style>
