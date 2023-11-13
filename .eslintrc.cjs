@@ -12,6 +12,7 @@ module.exports = {
 		ecmaVersion: 'latest',
 	},
 	rules: {
+		'vue/multi-word-component-names': 0,
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 		'prettier/prettier': [
