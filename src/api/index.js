@@ -9,7 +9,7 @@ const routes = axios.create({
 
 
 export function createMember(data) {
-	return routes.post('/users/create', data);
+	return routes.post('/users/register', data);
 }
 
 export function checkDupId(userId) {
