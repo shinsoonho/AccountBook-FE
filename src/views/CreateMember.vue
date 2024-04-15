@@ -1,41 +1,55 @@
 <template>
-	<div>테스트 입니당</div>
+	<div>회원가입</div>
 	<hr class="my-4" />
-	<form @submit.prevent="save">
+	<form>
 		<div class="mb-3">
 			<label for="title" class="form-label">아이디</label>
-			<input v-model="form.userId" type="text" class="form-control" id="title" />
+			<input v-model="form.serviceId" type="text" class="form-control" id="serviceId" />
 			<input type="button" class="btn btn-outline-primary" value="중복확인" @click="checkDuplicate"/>
 			<span v-if="duplicateMessage" class="text-danger">{{ duplicateMessage }}</span>
 		</div>
 		<div class="mb-3">
 			<label for="content" class="form-label">비밀번호</label>
-			<input v-model="form.userPw" class="form-control" id="content" />
+			<input v-model="form.userPw" class="form-control" id="userPw" />
+		</div>
+		<div class="mb-3">
+			<label for="content" class="form-label">이름</label>
+			<input v-model="form.userName" class="form-control" id="userName" />
+		</div>
+		<div class="mb-3">
+			<label for="userPhone" class="form-label">전화번호</label>
+			<input v-model="form.userPhone" class="form-control" id="userPhone" />
+		</div>
+		<div class="mb-3">
+			<label for="email" class="form-label">생년월일</label>
+			<input v-model="form.userAge" class="form-control" id="userAge" />
 		</div>
 		<div class="mb-3">
 			<label for="email" class="form-label">E-Mail</label>
-			<input v-model="form.email" class="form-control" id="email" />
+			<input v-model="form.userEmail" class="form-control" id="userEmail" />
 		</div>
-		<div class="pt-4">
+	</form>
+	<div class="pt-4">
 			<button type="button" class="btn btn-outline-dark me-2" @click="goPage('login')">
 				목록
 			</button>
-			<button class="btn btn-primary">저장</button>
+			<button @click="save" class="btn btn-primary">저장</button>
 		</div>
-	</form>
 </template>
 
 <script setup>
 import { createMember, checkDupId } from '@/api/index';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import Login from './LoginPage.vue';
 
 const router = useRouter();
 const form = ref({
-	userId: null,
+	serviceId: null,
 	userPw: null,
+	userName: null,
 	userEmail: null,
+	userPhone: null,
+	userAge: null,
 });
 
 const duplicateMessage = ref('');
@@ -67,12 +81,16 @@ const save = async () => {
 		const data = {
 			...form.value,
 		};
-		console.log('data.userId = ' + data.userId);
+		console.log('data.serviceId = ' + data.serviceId);
 		console.log('data.userPw = ' + data.userPw);
+		console.log('data.userName = ' + data.userName);
+		console.log('data.userPhone = ' + data.userPhone);
+		console.log('data.userAge = ' + data.userAge);
 		console.log('data.userEmail = ' + data.userEmail);
 		await createMember(data);
 
-		router.push({ name: Login });
+		router.push({ name: 'login' });
+
 	} catch (error) {
 		console.error(error);
 	}
