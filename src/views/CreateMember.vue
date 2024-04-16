@@ -1,7 +1,6 @@
 <template>
 	<div>회원가입</div>
 	<hr class="my-4" />
-	<form>
 		<div class="mb-3">
 			<label for="title" class="form-label">아이디</label>
 			<input v-model="form.serviceId" type="text" class="form-control" id="serviceId" />
@@ -28,7 +27,6 @@
 			<label for="email" class="form-label">E-Mail</label>
 			<input v-model="form.userEmail" class="form-control" id="userEmail" />
 		</div>
-	</form>
 	<div class="pt-4">
 			<button type="button" class="btn btn-outline-dark me-2" @click="goPage('login')">
 				목록
@@ -56,22 +54,24 @@ const duplicateMessage = ref('');
 
 const checkDuplicate = async () => {
 	try {
-		const userId = form.value.userId;
-		if( !userId ) {
+		const serviceId = form.value.serviceId;
+		console.log("serviceId = " + serviceId);
+		if( !serviceId ) {
 			duplicateMessage.value = '아이디를 입력하세요.';
 			return;
 		}
 
-		const isDuplicate = await checkDupId(userId);
+		await checkDupId(serviceId);
 
-		if(isDuplicate) {
-			duplicateMessage.value = '이미 존재하는 아이디 입니다.';
-		} else {
-			duplicateMessage.value = '사용 가능한 아이디 입니다.';
-		}
-
+		duplicateMessage.value = '사용 가능한 아이디 입니다.';
+		
+		
 	} catch (error) {
-		console.error(error);
+		if (error.response && error.response.data && error.response.data.message) {
+			duplicateMessage.value = error.response.data.message;
+		} else {
+			duplicateMessage.value = '서버 오류가 발생했습니다. 관리자에게 문의하세요.';
+		}
 	}
 }
 
@@ -92,7 +92,11 @@ const save = async () => {
 		router.push({ name: 'login' });
 
 	} catch (error) {
-		console.error(error);
+		if (error.response && error.response.data && error.response.data.message) {
+			alert(error.response.data.message);
+		} else {
+			alert('서버 오류가 발생했습니다. 관리자에게 문의하세요.');
+		}
 	}
 };
 
