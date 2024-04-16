@@ -7,13 +7,17 @@ const routes = axios.create({
 });
 
 
+export function userLogin(data) {
+	return routes.post('/users/login', data);
+}
 
 export function createMember(data) {
 	return routes.post('/users/register', data);
 }
 
-export function checkDupId(userId) {
-	return routes.post('/users/duplicateCheck', userId);
+export function checkDupId(serviceId) {
+		return routes.post('/users/duplicateCheck', { serviceId });
 }
+
 
 export default routes;
